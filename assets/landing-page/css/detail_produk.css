@@ -1,0 +1,21 @@
+.fotoproduk {
+    width: 348px; height: 348px;
+    border-radius: 10px;
+}
+
+.price {
+    font-family: "Open Sauce One", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+input.number-to-text::-webkit-outer-spin-button,
+input.number-to-text::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number].number-to-text {
+    -moz-appearance: textfield;
+}

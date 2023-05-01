@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta name="description" content="<?php echo $_meta_deskripsi; ?>">
   <meta name="keywords" content="<?php echo $_meta_keyword; ?>">
-  <meta name="author" content="Andhika Putra Pratama">
+  <meta name="author" content="Muhammad Ardi Setiawan">
   <title><?php echo $title; ?></title>
   <!-- Favicon-->
   <link rel="icon" href="<?php echo base_url('assets/webIcon.png'); ?>" type="image/x-icon">
@@ -90,7 +90,7 @@
     <!--Navbar-->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background: white; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12) !important;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="<?php echo base_url()?>">
           <strong><?php echo $_app_name; ?></strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,7 @@
               <li class="nav-item">
                 <?php if($this->session->userdata('is_Logged') == TRUE) { ?>
                   <a class="nav-link" href="<?php echo base_urL('auth/profile') ?>">
-                  <img class="user" src="https://game-cdn.appsample.com/sr/images/logo.png"/>
+                  <img class="user" src="<?php echo base_url('assets/DefaultProfile.webp'); ?>"/>
                     Nama
                   </a>
                 <?php } else {?>
@@ -124,15 +124,11 @@
       </div>
     </nav>
     <!--Navbar-->
-    <div class="landpage">
-      <div class="container h-100 d-flex justify-content-center align-items-center">
-        <div class="row smooth-scroll">
-          <div class="col-md-12 black-text text-center">
-            ada
-          </div>
-        </div>
-      </div>
-    </div>
+    <?php
+    if (isset($content) && $content) {
+        $this->load->view($content);
+    }
+    ?>
   </header>
   <!--Navigation & Intro-->
   <!--Main content-->
@@ -206,7 +202,7 @@
     <!--Copyright-->
     <div class="footer-copyright py-3 text-center">
       <div class="container-fluid">
-        © <?php echo date('Y'); ?> Copyright: <a> Minafood </a>
+        © <?php echo date('Y'); ?> Copyright: <a> <?php echo $_app_name; ?> </a>
       </div>
     </div>
     <!--/Copyright-->
@@ -221,6 +217,9 @@
 
   <!--Bootstrap tooltips-->
   <script type="text/javascript" src="<?php echo base_url('assets/landing-page'); ?>/js/popper.min.js"></script>
+
+  <!-- Bootstrap Core Js -->
+  <script src="<?php echo base_url('assets/admin-page'); ?>/plugins/bootstrap/js/bootstrap.js"></script>
 
   <!--Bootstrap core JavaScript-->
   <script type="text/javascript" src="<?php echo base_url('assets/landing-page'); ?>/js/bootstrap.min.js"></script>

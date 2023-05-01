@@ -27,11 +27,14 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo base_url('assets/admin-page'); ?>/css/themes/all-themes.css" rel="stylesheet" />
-
+    <link href="<?php echo base_url('assets/admin-page'); ?>/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
     <?php echo (isset($additional_head) ? $additional_head : ''); ?>
 </head>
 
 <body class="theme-blue">
+    <?php
+    $this->load->view('alert');
+    ?>
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -70,11 +73,7 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <?php if (!empty($this->session->userdata('profilfoto'))) { ?>
-                        <img src="<?php echo base_url('uploads/foto-profil/' . $this->session->userdata('profilfoto')); ?>" width="48" height="48" alt="User" />
-                    <?php } else { ?>
-                        <img src="<?php echo base_url('assets/DefaultProfile.webp'); ?>" width="48" height="48" alt="User" />
-                    <?php } ?>
+                    <img src="<?php echo base_url('assets/DefaultProfile.webp'); ?>" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo ucfirst($this->session->userdata('username')); ?></div>
@@ -94,23 +93,44 @@
                 <ul class="list">
                     <li class="active"></li>
                     <li>
+                        <a href="<?php echo site_url('dashboard'); ?>">
+                            <i class="material-icons">dashboard</i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?php echo base_url('produk'); ?>">
                             <i class="material-icons">trolley</i>
                             <span>Produk</span>
                         </a>
                     </li>
                     <li>
+                        <a href="<?php echo base_url('produk/kategori'); ?>">
+                            <i class="material-icons">category</i>
+                            <span>Kategori</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('produk/tipe'); ?>">
+                            <i class="material-icons">category</i>
+                            <span>Tipe</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">settings</i>
-                            <span>Manajemen</span>
+                            <i class="material-icons">summarize</i>
+                            <span>Pembayaran</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo site_url('produk/report'); ?>">Report</a>
+                                <a href="<?php echo site_url('laporan/pembayaran_notconf'); ?>">Pembayaran Belum Dikonfirmasi</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('laporan/pembayaran_conf'); ?>">Pembayaran Dikonfirmasi</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">public</i>
                             <span>Identitas</span>
@@ -123,7 +143,7 @@
                                 <a href="<?php echo site_url('kontak'); ?>">Kontak</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <script>
@@ -178,10 +198,11 @@
 
     <!-- Custom Js -->
     <script src="<?php echo base_url('assets/admin-page'); ?>/js/admin.js"></script>
-
-    <!-- Demo Js -->
-    <script src="<?php echo base_url('assets/admin-page'); ?>/js/demo.js"></script>
-
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="<?php echo base_url('assets/admin-page')?>/plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="<?php echo base_url('assets/admin-page')?>/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="<?php echo base_url('assets/admin-page')?>/js/pages/tables/jquery-datatable.js">
+    </script>
     <?php echo (isset($additional_body) ? $additional_body : ''); ?>
 </body>
 

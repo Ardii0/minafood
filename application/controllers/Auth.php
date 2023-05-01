@@ -22,7 +22,7 @@ class Auth extends CI_Controller
 		}
 	}
 	
-// 	
+// Register
 	public function register()
 	{
 		$this->form_validation->set_rules('username', 'Nama', 'trim|required');
@@ -88,8 +88,8 @@ class Auth extends CI_Controller
 	{
 		if ($this->session->userdata('role') == 'Admin') {
 			redirect('Dashboard', 'refresh');
-		} else if ($this->session->userdata('is_Logged') == TRUE) {
-			redirect('', 'refresh');
+		} else if ($this->session->userdata('role') == 'User') {
+			redirect(base_url(), 'refresh');
 		}
 		$this->form_validation->set_rules('email', 'Alamat Surel', 'trim|required|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -129,15 +129,14 @@ class Auth extends CI_Controller
 				}
 
 				$this->session->set_userdata($data);
-				$this->session->set_flashdata('success', 'Selamat, anda berhasil Login!');
 				if ($this->session->userdata('role') == 'Admin') {
 					redirect('Dashboard');
 				} else {
 					redirect('');
 				}
 			} else {
-				$this->session->set_flashdata('warning', 'Akun anda tidak ditemukan!');
-				redirect('auth/login');
+				$this->session->set_flashdata('warning', 'Terdapat Kesalahan..Coba lagi');
+				redirect('auth/login', 'refresh');
 			}
 		}
 	}

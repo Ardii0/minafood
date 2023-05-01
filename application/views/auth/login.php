@@ -36,6 +36,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="card">
             <div class="body">
                 <?php echo form_open('auth/login', 'id="sign_in"'); ?>
+                <?php $this->load->view('alert'); ?>
                 <div class="msg">
                     <h4 class="">Login</h4>
                 </div>
