@@ -303,6 +303,9 @@ class Auth extends CI_Controller
 		return $this->email->send();
 	}
 
+// Alamat
+
+
 // Logout
 	public function logout()
 	{

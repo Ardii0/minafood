@@ -28,6 +28,7 @@
                 </div>
                 <?php echo form_open_multipart('belanja/belanja_add', 'class="col-lg-4 col-md-12 col-sm-12 col-xs-12"') ?>
                     <h3>Atur Jumlah Pembelian</h3>
+                    <?php if(!empty($produk['stok'])) { ?>
                         <button type="button" onclick="decrement()">-</button>
                         <?php echo form_input($jumlah, '', ' type="number" class="number-to-text" onkeyup="total()" id="jumlah" min="1" max="'.$produk['stok'].'" required autocomplete="off"'); ?>
                         <!-- <input type="number" class="number-to-text" onkeyup="total()" id="jumlah" min="1" max="<?php echo $produk['stok']; ?>" required name="jumlah"> -->
@@ -39,7 +40,10 @@
                     <h5>Subtotal: 
                         <input type="text" class="number-to-text" id="subtotal" style="border: none; outline: none; background: white" disabled>
                     </h5>
-                    <button type="submit" class="btn btn-info" <?php if(!$this->session->userdata('role') == 'User'){
+                    <?php } else {?>
+                        <p>Stok: Habis</p>
+                    <?php } ?>
+                    <button type="submit" class="btn btn-info" <?php if(!$this->session->userdata('role') == 'User' || empty($produk['stok'])){
                         echo 'disabled';
                     } ?>>Beli Sekarang</button>
                 <?php echo form_close(); ?>

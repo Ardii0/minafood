@@ -22,16 +22,14 @@
   <style type="text/css">
     html,
     body,
-    header,
-    .landpage {
+    header, {
       height: 100%;
     }
 
     @media (min-width: 560px) and (max-width: 740px) {
       html,
       body,
-      header,
-      .landpage {
+      header, {
         height: 500px;
       }
     }
@@ -39,8 +37,7 @@
     @media (min-width: 800px) and (max-width: 850px) {
       html,
       body,
-      header,
-      .landpage {
+      header, {
         height: 500px;
       }
     }
@@ -127,11 +124,13 @@
       </div>
     </nav>
     <!--Navbar-->
-    <?php
-    if (isset($content) && $content) {
-        $this->load->view($content);
-    }
-    ?>
+    <div class="mb-3">
+      <?php
+        if (isset($content) && $content) {
+          $this->load->view($content);
+        }
+      ?>
+    </div>
   </header>
   <!--Navigation & Intro-->
   <!--Main content-->

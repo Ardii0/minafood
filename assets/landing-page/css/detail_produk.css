@@ -1,3 +1,7 @@
+.landpage {
+   min-height: 90vh;
+}
+
 .fotoproduk {
     width: 348px; height: 348px;
     border-radius: 10px;

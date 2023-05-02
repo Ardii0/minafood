@@ -60,8 +60,8 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                <a class="navbar-brand" href="<?php echo site_url('dashboard'); ?>" style="display: flex;">
-                    <?php echo '<img src="'.base_url('assets/WebIcon.png').'" style="position: absolute; margin: -14px 0 0 0;" width="48" height="48" alt="User" /><p style="margin-left: 60px">' . $_app_name . ' </p>'; ?>
+                <a class="navbar-brand" href="<?php echo site_url('dashboard'); ?>">
+                    <?php echo $_app_name ; ?>
                 </a>
             </div>
         </div>

@@ -3,6 +3,16 @@
         exit('No direct script access allowed');
     }
 
+    function Akun($id, $title) {
+        $ci =& get_instance();
+        $ci->load->database();
+        $result = $ci->db->where('id_user',$id)->get('users');
+        foreach ($result->result() as $c) {
+            $stmt= $c->$title;
+        return $stmt;
+        }
+    }
+
     function namaKategori($id) {
         $ci =& get_instance();
         $ci->load->database();
@@ -24,5 +34,5 @@
     }
     
     function IDR($value) {
-        return 'Rp. ' . number_format($value).',-';
-    } 
+        return 'Rp. ' . number_format($value);
+    }

@@ -116,4 +116,14 @@ class Main_model extends CI_Model
 
         return $query->row()->id_produk;
     }
+
+    public function subtotal($id_produk)
+    {
+        $this->db->select('harga');
+        $this->db->where("id_produk", $id_produk);
+        $this->db->limit(1);
+        $query = $this->db->get('produk');
+
+        return $query->row()->harga;
+    }
 }
