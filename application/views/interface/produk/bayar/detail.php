@@ -1,23 +1,30 @@
 <section class="content">
-    <div class="landpage container-fluid">
+    <div class="landpage container">
         <div class="h-100" style="margin: 75px 34px 0 34px;">
             <div class="row clearfix">
                 <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                    <div class="col-md-2">
+                    <div class="col">
+                        <h3>Barang yang dibeli</h3>
                         <?php if (!$foto['value']) { ?>
-                            <img src="<?php echo site_url('assets/admin-page/images/500x300.png'); ?>" class="img-responsive fotoproduk">
+                            <img src="<?php echo site_url('assets/admin-page/images/500x300.png'); ?>" class="img-responsive fotoproduk-bayar">
                         <?php } else { ?>
-                            <img src="<?php echo site_url('uploads/foto-produk/'.$foto['value']); ?>" class="img-responsive fotoproduk">
+                            <div class="d-flex">
+                                <img src="<?php echo site_url('uploads/foto-produk/'.$foto['value']); ?>" class="img-responsive fotoproduk_bayar">
+                                <div class="ml-2 text-right">
+                                    <h1>
+                                        <?php echo $produk['nama_produk']; ?>
+                                    </h1>
+                                    <div class="price_bayar">
+                                        <?php if(isset($produk['harga'])) {
+                                            echo IDR($produk['harga']);
+                                        } ?>
+                                    </div>
+                                </div>
+                            </div>
                         <?php } ?>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                    <h1>
-                        <?php echo $produk['nama_produk']; ?>
-                    </h1>
-                    <div class="price">
-                        <?php echo IDR($produk['harga']); ?>
-                    </div>
                     <br>
                     <p>
                         Kategori: <?php echo namaKategori($produk['id_kategori']); ?>
@@ -33,8 +40,8 @@
                         <!-- <input type="number" class="number-to-text" onkeyup="total()" id="jumlah" min="1" max="<?php echo $produk['stok']; ?>" required name="jumlah"> -->
                         <input type="hidden" id="harga" value="<?php echo $produk['harga']; ?>">
                         <input type="hidden" id="stok" value="<?php echo $produk['stok']; ?>">
+                        <input type="hidden" id="sisa">
                         <button type="button" onclick="increment()">+</button>
-                        <?php echo form_input($id_produk, $produk['id_produk'], ' style="display: none;"'); ?>
                     <p>Stok: <?php echo $produk['stok']; ?></p>
                     <h5>Subtotal: 
                         <input type="text" class="number-to-text" id="subtotal" style="border: none; outline: none; background: white" disabled>

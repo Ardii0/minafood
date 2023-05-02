@@ -3,9 +3,22 @@
     border-radius: 10px;
 }
 
+.fotoproduk_bayar {
+    height: 100px;
+    width: 100px; 
+    border-radius: 10px;
+}
+
 .price {
     font-family: "Open Sauce One", sans-serif;
     font-size: 28px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.price_bayar {
+    font-family: "Open Sauce One", sans-serif;
+    font-size: 16px;
     font-weight: 700;
     line-height: 30px;
 }

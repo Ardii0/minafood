@@ -106,4 +106,14 @@ class Main_model extends CI_Model
         $this->db->group_by($group_by);
         return $this->db->get();
     }
+
+    public function getone()
+    {
+        $this->db->select('id_produk');
+        $this->db->where("id_user", $this->session->userdata('id_user'));
+        $this->db->limit(1);
+        $query = $this->db->get('beli_langsung');
+
+        return $query->row()->id_produk;
+    }
 }

@@ -85,6 +85,9 @@
 </head>
 
 <body class="event-lp">
+    <?php
+    $this->load->view('alert');
+    ?>
   <!--Navigation & Intro-->
   <header>
     <!--Navbar-->
@@ -109,9 +112,9 @@
           <ul class="navbar-nav">
               <li class="nav-item">
                 <?php if($this->session->userdata('is_Logged') == TRUE) { ?>
-                  <a class="nav-link" href="<?php echo base_urL('auth/profile') ?>">
+                  <a class="nav-link" href="<?php echo base_urL('auth/logout') ?>">
                   <img class="user" src="<?php echo base_url('assets/DefaultProfile.webp'); ?>"/>
-                    Nama
+                    <?php echo $this->session->userdata('username')?>
                   </a>
                 <?php } else {?>
                   <a class="nav-link" href="<?php echo base_urL('auth/login') ?>">
