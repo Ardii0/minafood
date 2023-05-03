@@ -39,7 +39,7 @@
                                         </td>
                                         <td><?php echo $data->kode_produk; ?></td>
                                         <td><?php echo $data->nama_produk; ?></td>
-                                        <td><?php echo namaKategori($data->id_kategori); ?></td>
+                                        <td><?php echo Kategori($data->id_kategori, 'nama_kategori'); ?></td>
                                         <!-- <td><?php echo namaTipe($data->id_tipe); ?></td> -->
                                         <td><?php echo $data->stok; ?></td>
                                         <td>

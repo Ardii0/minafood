@@ -87,7 +87,7 @@ class Auth extends CI_Controller
 	public function login()
 	{
 		if ($this->session->userdata('role') == 'Admin') {
-			redirect('Dashboard', 'refresh');
+			redirect('dashboard', 'refresh');
 		} else if ($this->session->userdata('role') == 'User') {
 			redirect(base_url(), 'refresh');
 		}
@@ -130,7 +130,7 @@ class Auth extends CI_Controller
 
 				$this->session->set_userdata($data);
 				if ($this->session->userdata('role') == 'Admin') {
-					redirect('Dashboard');
+					redirect('dashboard');
 				} else {
 					redirect('');
 				}

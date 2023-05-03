@@ -437,6 +437,49 @@ class Produk extends CI_Controller
         redirect('produk/tipe', 'refresh');
     }
 
+// Laporan Pembayaran
+ // Belum DiKonfirmasi
+	public function pembayaran_notconf()
+	{
+        $this->data['notconf'] = $this->Main_model->where_data(array('status' => 'Belum Dikonfirmasi'), 'pembayaran')->result();
+
+        $this->data['content'] = 'backend/modul-admin/laporan/belum_dikonfirmasi/index';
+        $this->template->_render_page('layout/adminPanel', $this->data);
+	}
+
+	public function konfirmasi($id)
+	{
+        $where = array('id_pembayaran' => $id);
+        $data  = [
+            'status' => 'Telah Dikonfirmasi',
+            'waktu_konfirmasi' => date('Y-m-d H:i:s')
+        ];
+        if ($this->Main_model->update_data($where, $data, 'pembayaran')) {
+            $this->session->set_flashdata('success', 'Data berhasil dikonfirmasi!');
+            redirect('produk/pembayaran_conf', 'refresh');
+        }
+	}
+
+ // DiKonfirmasi
+	public function pembayaran_conf()
+	{
+        $this->data['conf'] = $this->Main_model->where_data(array('status' => 'Telah Dikonfirmasi'), 'pembayaran')->result();
+
+        $this->data['content'] = 'backend/modul-admin/laporan/dikonfirmasi/index';
+        $this->template->_render_page('layout/adminPanel', $this->data);
+	}
+
+ // Detail Pembayaran
+	public function pembayaran_detail($id)
+	{
+        $where = array('id_pembayaran' => $id);
+        $this->data['detail'] = $this->Main_model->where_data($where, 'pembayaran')->row_array();
+
+        $this->data['additional_head'] = '<link rel="stylesheet" href="'.base_url().'assets/landing-page/css/detail_produk.css" />';
+        $this->data['content'] = 'backend/modul-admin/laporan/detail/index';
+        $this->template->_render_page('layout/adminPanel', $this->data);
+	}
+
 // Other Stuff
 	public function randomize($long)
 	{

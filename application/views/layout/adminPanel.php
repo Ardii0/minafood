@@ -93,7 +93,7 @@
                 <ul class="list">
                     <li class="active"></li>
                     <li>
-                        <a href="<?php echo site_url('dashboard'); ?>">
+                        <a href="<?php echo base_url('dashboard'); ?>">
                             <i class="material-icons">dashboard</i>
                             <span>Dashboard</span>
                         </a>
@@ -119,14 +119,14 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">summarize</i>
-                            <span>Pembayaran</span>
+                            <span>Laporan Pembayaran</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo site_url('laporan/pembayaran_notconf'); ?>">Pembayaran Belum Dikonfirmasi</a>
+                                <a href="<?php echo site_url('produk/pembayaran_notconf'); ?>">Pembayaran Belum Dikonfirmasi</a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url('laporan/pembayaran_conf'); ?>">Pembayaran Dikonfirmasi</a>
+                                <a href="<?php echo site_url('produk/pembayaran_conf'); ?>">Pembayaran Dikonfirmasi</a>
                             </li>
                         </ul>
                     </li>
@@ -166,7 +166,7 @@
             <!-- Footer -->
             <div class="legal">
                 <a href="<?php echo site_url('auth/logout'); ?>" style="display: flex; color: #333333; font-weight: 700; text-decoration: none;">
-                    <i class="material-icons">input</i>
+                    <i class="material-icons">output</i>
                     <span style="display: flex; items-align: center; margin: 5px 0 0 10px;">Keluar</span>
                 </a>
             </div>

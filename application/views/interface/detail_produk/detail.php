@@ -20,7 +20,7 @@
                     </div>
                     <br>
                     <p>
-                        Kategori: <?php echo namaKategori($produk['id_kategori']); ?>
+                        Kategori: <?php echo Kategori($produk['id_kategori'], 'nama_kategori'); ?>
                     </p>
                     <p>
                         <?php echo $produk['deskripsi']; ?>
@@ -56,7 +56,7 @@
        var harga = $("#harga").val();
        var jumlah = $("#jumlah").val();
        var stok = $("#stok").val();
-       var subtotal = parseInt(harga*jumlah);
+       var subtotal = 'Rp'+parseInt(harga*jumlah);
        var sisa = parseInt(stok-jumlah);
        $("#subtotal").val(subtotal);
        $("#sisa").val(sisa);

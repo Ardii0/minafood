@@ -13,7 +13,7 @@
                     <h5 class="card-title truncate"><?php echo $data->nama_produk?></h5>
                     <b class="card-text"><?php echo IDR($data->harga)?></b>
                     <p class="card-text">--</p>
-                    <p class="card-text"><?php echo namaKategori($data->id_kategori)?></p>
+                    <p class="card-text"><?php echo Kategori($data->id_kategori, 'nama_kategori')?></p>
                     <p class="card-text">Stok : 
                     <?php if(empty($data->stok)) {?>
                         Habis
