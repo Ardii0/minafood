@@ -1,5 +1,6 @@
 <div class="landpage container-fluid">
     <div class="h-100" style="margin: 75px 34px 0 34px;">
+    <h2>Produk Kami</h2>
     <div class="row smooth-scroll">
         <?php foreach($produk as $data): ?>
             <div class="col-lg-2 col-md-4 col-xs-6 d-flex justify-content-center mb-4">
@@ -22,6 +23,14 @@
                 </a>
             </div>
         <?php endforeach; ?>
+        <!-- <?php foreach($productsbycategory as $categoryName => $row) : ?>
+            <div>
+                <h4><?php echo $categoryName;?></h4>
+                <?php foreach($row as $product) : ?>
+                    <div><h6><?php echo anchor('method/', $row['nama_produk']); ?></h6></div>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?> -->
     </div>
     </div>
 </div>

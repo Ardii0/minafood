@@ -15,6 +15,7 @@
                                     <th>Jumlah</th>
                                     <th>Harga Total</th>
                                     <th>Tanggal Konfirmasi</th>
+                                    <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,6 +29,11 @@
                                         <td><?php echo $data->jumlah; ?></td>
                                         <td><?php echo IDR($data->subtotal); ?></td>
                                         <td><?php echo $data->waktu_konfirmasi; ?></td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <?php echo anchor('produk/pembayaran_detail/'.$data->id_pembayaran, '<i class="material-icons">visibility</i>', 'class="btn btn-warning btn-circle waves-effect waves-circle waves-float"'); ?>
+                                            </div>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

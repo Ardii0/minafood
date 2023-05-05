@@ -105,11 +105,18 @@
               </a>
             </li>
           </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo base_url('profile/history'); ?>">
+                History
+              </a>
+            </li>
+          </ul>
           <!--Social Icons-->
           <ul class="navbar-nav">
               <li class="nav-item">
                 <?php if($this->session->userdata('is_Logged') == TRUE) { ?>
-                  <a class="nav-link" href="<?php echo base_urL('auth/logout') ?>">
+                  <a class="nav-link" href="<?php echo base_urL('profile') ?>">
                   <img class="user" src="<?php echo base_url('assets/DefaultProfile.webp'); ?>"/>
                     <?php echo $this->session->userdata('username')?>
                   </a>
