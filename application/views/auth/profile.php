@@ -11,6 +11,7 @@
                         <?php } ?>
                         <!-- <button class="btn btn-light">Pilih Foto</button> -->
                             <?php echo form_upload($foto, '', 'accept="image/*" onchange="getFile(); upload();" class="upload_fotoprofil mt-2"'); ?>
+                            <button type="submit" id="upfile" hidden=""></button>
                     <?php echo form_close(); ?>
                 </div>
                 <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
