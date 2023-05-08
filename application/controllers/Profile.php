@@ -65,7 +65,66 @@ class Profile extends CI_Controller
 		}
 	}
 
-	
+// Alamat
+    public function alamat()
+    {
+        $this->form_validation->set_rules('nama_penerima', 'Nama Penerima', 'trim|required');
+        $this->form_validation->set_rules('nomor_hp', 'No HP', 'trim|required');
+        $this->form_validation->set_rules('kota', 'Kota', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('kode_pos', 'Kode Pos', 'trim|required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->data['nama_penerima'] = array(
+                'id'    => 'nama_penerima',
+                'name'  => 'nama_penerima',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('nama_penerima'),
+            );
+            $this->data['nomor_hp'] = array(
+                'id'    => 'nomor_hp',
+                'name'  => 'nomor_hp',
+                'type'  => 'number',
+                'value' => $this->form_validation->set_value('nomor_hp'),
+            );
+            $this->data['kota'] = array(
+                'id'    => 'kota',
+                'name'  => 'kota',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('kota'),
+            );
+            $this->data['alamat'] = array(
+                'name'  => 'alamat',
+                'value' => $this->form_validation->set_value('alamat'),
+            );
+            $this->data['kode_pos'] = array(
+                'id'    => 'kode_pos',
+                'name'  => 'kode_pos',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('kode_pos'),
+            );
+            $this->data['content'] = 'auth/alamat';
+            $this->template->_render_page('layout/landingpagePanel', $this->data);
+        } else {
+            $nama_penerima = $this->input->post('nama_penerima', true);
+            $nomor_hp = $this->input->post('nomor_hp', true);
+            $kota = $this->input->post('kota', true);
+            $alamat = $this->input->post('alamat', true);
+            $kode_pos = $this->input->post('kode_pos', true);
+            $data = [
+                'id_user'   		=> $this->session->userdata('id_user'),
+                'nama_penerima'   	=> $nama_penerima,
+                'nomor_hp'         	=> $nomor_hp,
+                'kota'     			=> $kota,
+                'alamat'         	=> $alamat,
+                'kode_pos'         	=> $kode_pos,
+            ];
+			if ($this->Main_model->insert_data($data, 'alamat')) {
+				$this->session->set_flashdata('success', 'Alamat berhasil ditambahkan!');
+				redirect('profile', 'refresh');
+			}
+        }
+    }
 	
 // History
 	public function history()

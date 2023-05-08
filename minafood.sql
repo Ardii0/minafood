@@ -24,18 +24,19 @@ CREATE TABLE `alamat` (
   `id_alamat` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) DEFAULT NULL,
   `nama_penerima` varchar(50) DEFAULT NULL,
-  `nomor_hp` int(11) DEFAULT NULL,
+  `nomor_hp` varchar(20) DEFAULT NULL,
   `kota` varchar(50) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `kode_pos` int(11) DEFAULT NULL,
   `prioritas` enum('Utama','Samping') DEFAULT NULL,
   PRIMARY KEY (`id_alamat`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `alamat` */
 
 insert  into `alamat`(`id_alamat`,`id_user`,`nama_penerima`,`nomor_hp`,`kota`,`alamat`,`kode_pos`,`prioritas`) values 
-(1,2,'ada',2,'ada','AlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamat',1312,NULL);
+(1,3,'Ahmad Subardjo','089495959','Semarang','Jl. Hasanudin 05 RT/RW 09/09',1312,NULL),
+(2,2,'Ahmadun','082392332','Semarang','Jl. Pemuda Panjangan Raya RT09/R02',17738,NULL);
 
 /*Table structure for table `beli_langsung` */
 
@@ -111,7 +112,7 @@ CREATE TABLE `pembayaran` (
   `detail_waktu` timestamp NOT NULL DEFAULT current_timestamp(),
   `waktu_konfirmasi` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_pembayaran`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `pembayaran` */
 
@@ -139,7 +140,8 @@ insert  into `pembayaran`(`id_pembayaran`,`kode_pembayaran`,`id_produk`,`id_user
 (22,'230502ROQYCP8B',1,2,2,500000,1,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:20:39',NULL),
 (23,'230502ZBNR1GYW',1,2,1,250000,1,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:23:39',NULL),
 (24,'230503W1UWEJBF',1,3,2,500000,1,'Belum Dikonfirmasi','qrcode_meet_google_com.png','2023-05-03','2023-05-03 13:53:56',NULL),
-(25,'2305039AFPKO01',1,2,2,500000,1,'Telah Dikonfirmasi','qrcode_meet_google_com1.png','2023-05-03','2023-05-03 13:55:57','2023-05-04 11:46:37');
+(25,'2305039AFPKO01',1,2,2,500000,1,'Telah Dikonfirmasi','qrcode_meet_google_com1.png','2023-05-03','2023-05-03 13:55:57','2023-05-04 11:46:37'),
+(26,'230506K1FS1UOO',1,2,1,250000,1,'Belum Dikonfirmasi','piranha.jpg','2023-05-06','2023-05-06 16:30:17',NULL);
 
 /*Table structure for table `produk` */
 
@@ -162,7 +164,7 @@ CREATE TABLE `produk` (
 /*Data for the table `produk` */
 
 insert  into `produk`(`id_produk`,`kode_produk`,`nama_produk`,`id_kategori`,`id_tipe`,`harga`,`stok`,`deskripsi`,`foto`,`created_at`) values 
-(1,'PDK-LWBISRV','Piranha',1,2,250000,2,'Contoh Deskripsi','piranha.jpg','2023-05-01 01:21:40'),
+(1,'PDK-LWBISRV','Piranha',1,2,250000,1,'Contoh Deskripsi','piranha.jpg','2023-05-01 01:21:40'),
 (2,'PDK-ADADADA','Piranha ke 2',1,2,250000,NULL,'<p><em><strong>Contoh</strong></em><strong><em> Desk</em>ripsi<s> ada egege</s></strong></p>\r\n','','2023-05-01 01:21:40'),
 (3,'PDK-022EGWJ','Ikan Lele',1,2,20000,NULL,'ada','','2023-05-01 16:05:37'),
 (4,'PDK-4HUC2UE','tes',1,1,20000,NULL,'<p>tes</p>\r\n',NULL,'2023-05-02 13:38:26'),
@@ -207,7 +209,7 @@ CREATE TABLE `users` (
 
 insert  into `users`(`id_user`,`username`,`email`,`password`,`role`,`foto`) values 
 (1,'Admin','admin@gmail.com','$2y$12$iyU4JEh/Dp2K/KC8pRN.UeCc1zuTsY7CdFxCxaHHmFTC6dtppb5Ni','Admin',NULL),
-(2,'ada','ada@ada.com','$2y$12$xlS4vuGOJCcysYmZ/FKEf.1MnKW0jqACCpoTwWBREXq8s1mHgiaFC','User','Screenshot_(56)1.png');
+(2,'ada','ada@ada.com','$2y$12$xlS4vuGOJCcysYmZ/FKEf.1MnKW0jqACCpoTwWBREXq8s1mHgiaFC','User','tokped.jpg');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

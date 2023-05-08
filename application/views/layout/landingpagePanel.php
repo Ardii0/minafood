@@ -116,10 +116,20 @@
           <ul class="navbar-nav">
               <li class="nav-item">
                 <?php if($this->session->userdata('is_Logged') == TRUE) { ?>
-                  <a class="nav-link" href="<?php echo base_urL('profile') ?>">
-                  <img class="user" src="<?php echo base_url('assets/DefaultProfile.webp'); ?>"/>
-                    <?php echo $this->session->userdata('username')?>
-                  </a>
+                  <div class="d-flex">
+                    <a class="nav-link" href="<?php echo base_urL('profile') ?>">
+                        <?php if (!$this->db->select('foto')->where("id_user", $this->session->userdata('id_user'))->limit(1)->get('users')->row()->foto) { ?>
+                          <img class="user" src="<?php echo base_url('assets/DefaultProfile.jpg'); ?>"/>
+                        <?php } else { ?>
+                          <img class="user" src="<?php echo site_url('uploads/foto-profil/'.$this->db->select('foto')->where("id_user", $this->session->userdata('id_user'))->limit(1)->get('users')->row()->foto);?>" class="img-responsive" style="max-width: 258px; max-height: 258px; margin: auto;" alt="">
+                        <?php } ?>
+                      <?php echo $this->session->userdata('username')?>
+                    </a>
+                    
+                    <a class="nav-link" href="<?php echo base_urL('auth/logout') ?>">
+                      <i class="fas fa-arrow-right pr-1"></i>
+                    </a>
+                  </div>
                 <?php } else {?>
                   <a class="nav-link" href="<?php echo base_urL('auth/login') ?>">
                     Login
