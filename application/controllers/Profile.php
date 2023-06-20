@@ -126,6 +126,12 @@ class Profile extends CI_Controller
         }
     }
 	
+// Keranjang
+	public function keranjang()
+	{
+		$this->template->_render_page('layout/landingpagePanel', $this->data);
+	}
+
 // History
 	public function history()
 	{

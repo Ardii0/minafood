@@ -54,17 +54,31 @@ class Belanja extends CI_Controller
 
     public function belanja_add()
     {
-        $where = array('id_user' => $this->session->userdata('id_user'));
-        $this->Main_model->delete_data($where, 'beli_langsung');
-        $jumlah = $this->input->post('jumlah', true);
-        $id_produk = $this->input->post('id_produk', true);
-        $data = [
-            'id_user' => $this->session->userdata('id_user'),
-            'id_produk' => $id_produk,
-            'jumlah' => $jumlah,
-        ];
-        $this->Main_model->insert_data($data, 'beli_langsung');
-        redirect(base_url('belanja/bayar'));
+        $submit = $this->input->post('submit');
+        if ($submit == 'keranjang') {
+            $jumlah = $this->input->post('jumlah', true);
+            $id_produk = $this->input->post('id_produk', true);
+            $data = [
+                'id_user' => $this->session->userdata('id_user'),
+                'id_produk' => $id_produk,
+                'jumlah' => $jumlah,
+            ];
+            $this->Main_model->insert_data($data, 'keranjang');
+            $this->session->set_flashdata('success', 'Barang anda telah masuk ke Keranjang');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else if ($submit == 'bali_langsung') {
+            $where = array('id_user' => $this->session->userdata('id_user'));
+            $this->Main_model->delete_data($where, 'beli_langsung');
+            $jumlah = $this->input->post('jumlah', true);
+            $id_produk = $this->input->post('id_produk', true);
+            $data = [
+                'id_user' => $this->session->userdata('id_user'),
+                'id_produk' => $id_produk,
+                'jumlah' => $jumlah,
+            ];
+            $this->Main_model->insert_data($data, 'beli_langsung');
+            redirect(base_url('belanja/bayar'));
+        }
     }
 
 // Bayar

@@ -70,6 +70,23 @@ CREATE TABLE `kategori` (
 insert  into `kategori`(`id_kategori`,`nama_kategori`,`created_at`) values 
 (1,'Predator','2023-04-30 22:49:21');
 
+/*Table structure for table `keranjang` */
+
+DROP TABLE IF EXISTS `keranjang`;
+
+CREATE TABLE `keranjang` (
+  `id_keranjang` int NOT NULL AUTO_INCREMENT,
+  `id_user` int DEFAULT NULL,
+  `id_produk` int DEFAULT NULL,
+  `jumlah` int DEFAULT NULL,
+  PRIMARY KEY (`id_keranjang`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `keranjang` */
+
+insert  into `keranjang`(`id_keranjang`,`id_user`,`id_produk`,`jumlah`) values 
+(1,2,1,1);
+
 /*Table structure for table `kontak` */
 
 DROP TABLE IF EXISTS `kontak`;

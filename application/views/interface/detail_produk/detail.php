@@ -32,7 +32,7 @@
                         <div class="d-flex justify-content-center">
                             <div style="border: 1px solid #BFC9D9;padding: 10px;width: fit-content; border-radius: 8px;">
                                 <input type="button" onclick="decrement()" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 pb-1" data-field="quantity">
-                                <?php echo form_input($jumlah, '', ' type="number" class="number-to-text text-center" onkeyup="total()" id="jumlah" min="1" max="'.$produk['stok'].'" required autocomplete="off" style="outline: 0; border: none;"'); ?>
+                                <?php echo form_input($jumlah, '', 'type="number" class="number-to-text text-center" onkeyup="total()" id="jumlah" min="1" max="'.$produk['stok'].'" required autocomplete="off" style="outline: 0; border: none;"'); ?>
                                 <input type="button" onclick="increment()" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="quantity">
                             </div>
                             <!-- <input type="number" class="number-to-text" onkeyup="total()" id="jumlah" min="1" max="<?php echo $produk['stok']; ?>" required name="jumlah"> -->
@@ -49,22 +49,30 @@
                     <?php } else {?>
                         <p>Stok: Habis</p>
                     <?php } ?>
+                    <button type="submit" class="btn btn-info" <?php if(!$this->session->userdata('role') == 'User' || empty($produk['stok'])){
+                        echo 'disabled';
+                    } ?> name="submit" value="keranjang"><i class="fas fa-plus mr-1"></i>Keranjang</button>
                     <button type="submit" class="btn btn-info mb-3" <?php if(!$this->session->userdata('role') == 'User' || empty($produk['stok'])){
                         echo 'disabled';
-                    } ?>>Beli Sekarang</button>
+                    } ?> name="submit" value="beli_langsung">Beli Sekarang</button>
                 <?php echo form_close(); ?>
             </div>
         </div>
     </div>
 </section>
 <script>
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID',
+            { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
+        ).format(money);
+    }
    function total() {
        var harga = $("#harga").val();
        var jumlah = $("#jumlah").val();
        var stok = $("#stok").val();
-       var subtotal = 'Rp'+parseInt(harga*jumlah);
+       var subtotal = parseInt(harga*jumlah);
        var sisa = parseInt(stok-jumlah);
-       $("#subtotal").val(subtotal);
+       $("#subtotal").val(formatRupiah(subtotal));
        $("#sisa").val(sisa);
    }
    function increment() {

@@ -105,18 +105,16 @@
               </a>
             </li>
           </ul>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo base_url('profile/history'); ?>">
-                History
-              </a>
-            </li>
-          </ul>
           <!--Social Icons-->
           <ul class="navbar-nav">
               <li class="nav-item">
                 <?php if($this->session->userdata('is_Logged') == TRUE) { ?>
                   <div class="d-flex">
+                    <li class="nav-item">
+                      <a class="nav-link" href="<?php echo base_url('profile/keranjang'); ?>">
+                        <i class="fas fa-shopping-cart"></i>
+                      </a>
+                    </li>
                     <a class="nav-link" href="<?php echo base_urL('profile') ?>">
                         <?php if (!$this->db->select('foto')->where("id_user", $this->session->userdata('id_user'))->limit(1)->get('users')->row()->foto) { ?>
                           <img class="user" src="<?php echo base_url('assets/DefaultProfile.jpg'); ?>"/>
@@ -125,6 +123,11 @@
                         <?php } ?>
                       <?php echo $this->session->userdata('username')?>
                     </a>
+                    <li class="nav-item">
+                      <a class="nav-link" href="<?php echo base_url('profile/history'); ?>">
+                        History
+                      </a>
+                    </li>
                     
                     <a class="nav-link" href="<?php echo base_urL('auth/logout') ?>">
                       <i class="fas fa-arrow-right pr-1"></i>
