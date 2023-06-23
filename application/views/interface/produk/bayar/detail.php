@@ -83,7 +83,7 @@
                         <div class="mt-auto">
                             <div>
                                 <h5 class="mt-4">Total Harga: 
-                                    Rp<input type="text" name="subtotal" class="number-to-text" value="<?php echo $produk['harga']*$jumlah['value']; ?>" id="subtotal" style="border: none; outline: none; background: white" disabled>
+                                    <input type="text" name="subtotal" class="number-to-text" value="<?php echo IDR($produk['harga']*$jumlah['value']); ?>" id="subtotal" style="border: none; outline: none; background: white" disabled>
                                 </h5>
                             </div>
                         </div>
@@ -98,13 +98,18 @@
     </div>
 </section>
 <script>
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID',
+            { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
+        ).format(money);
+    }
    function total() {
        var harga = $("#harga").val();
        var jumlah = $("#jumlah").val();
        var stok = $("#stok").val();
        var subtotal = parseInt(harga*jumlah);
        var sisa = parseInt(stok-jumlah);
-       $("#subtotal").val(subtotal);
+       $("#subtotal").val(formatRupiah(subtotal));
        $("#sisa").val(sisa);
    }
    function increment() {

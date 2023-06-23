@@ -129,6 +129,11 @@ class Profile extends CI_Controller
 // Keranjang
 	public function keranjang()
 	{
+		$where = array('id_user' => $this->session->userdata('id_user'));
+		$this->data['keranjang'] = $this->Main_model->where_data($where, 'keranjang')->result();
+
+		$this->data['additional_head'] = '<link rel="stylesheet" href="'.base_url().'assets/landing-page/css/detail_produk.css" />';
+		$this->data['content'] = 'interface/keranjang/index';
 		$this->template->_render_page('layout/landingpagePanel', $this->data);
 	}
 

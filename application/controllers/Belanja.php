@@ -59,22 +59,22 @@ class Belanja extends CI_Controller
             $jumlah = $this->input->post('jumlah', true);
             $id_produk = $this->input->post('id_produk', true);
             $data = [
-                'id_user' => $this->session->userdata('id_user'),
+                'id_user'   => $this->session->userdata('id_user'),
                 'id_produk' => $id_produk,
-                'jumlah' => $jumlah,
+                'jumlah'    => $jumlah,
             ];
             $this->Main_model->insert_data($data, 'keranjang');
             $this->session->set_flashdata('success', 'Barang anda telah masuk ke Keranjang');
             redirect($_SERVER['HTTP_REFERER']);
-        } else if ($submit == 'bali_langsung') {
+        } else if ($submit == 'beli_langsung') {
             $where = array('id_user' => $this->session->userdata('id_user'));
             $this->Main_model->delete_data($where, 'beli_langsung');
             $jumlah = $this->input->post('jumlah', true);
             $id_produk = $this->input->post('id_produk', true);
             $data = [
-                'id_user' => $this->session->userdata('id_user'),
+                'id_user'   => $this->session->userdata('id_user'),
                 'id_produk' => $id_produk,
-                'jumlah' => $jumlah,
+                'jumlah'    => $jumlah,
             ];
             $this->Main_model->insert_data($data, 'beli_langsung');
             redirect(base_url('belanja/bayar'));
@@ -188,7 +188,62 @@ class Belanja extends CI_Controller
             }
         }
     }
-    
+
+// Bayar
+    public function beli()
+    {
+        // $where = array('id_user' => $this->session->userdata('id_user'));
+        // $row = $this->Main_model->where_data($where, 'keranjang')->row_array();
+        // $bayarow = $this->Main_model->where_data($where, 'beli_langsung')->row_array();
+        // $this->data['beli'] = $bayarow;
+        // $this->data['alamat'] = $this->Main_model->where_data(array('id_user' => $this->session->userdata('id_user')), 'alamat')->row_array();
+        // if (isset($row['id_produk']) || isset($row['id_user'])) {
+        //     $this->data['nama_produk'] = array(
+        //         'id'    => 'nama_produk',
+        //         'name'  => 'nama_produk',
+        //         'type'  => 'text',
+        //         'value' => $this->form_validation->set_value('nama_produk', $row['nama_produk']),
+        //     );
+        //     $this->data['foto'] = array(
+        //         'id'    => 'foto',
+        //         'name'  => 'foto',
+        //         'type'  => 'file',
+        //         'value' => $this->form_validation->set_value('foto', $row['foto']),
+        //     );
+        //     $this->data['jumlah'] = array(
+        //         'id'    => 'jumlah',
+        //         'name'  => 'jumlah',
+        //         'type'  => 'number',
+        //         'value' => $this->form_validation->set_value('jumlah', $bayarow['jumlah']),
+        //     );
+        //     $this->data['subtotal'] = array(
+        //         'id'    => 'subtotal',
+        //         'name'  => 'subtotal',
+        //         'type'  => 'text',
+        //         'value' => $this->form_validation->set_value('subtotal'),
+        //     );
+        //     $this->data['bukti_pembayaran'] = array(
+        //         'id'    => 'bukti_pembayaran',
+        //         'name'  => 'bukti_pembayaran',
+        //         'type'  => 'file',
+        //         'value' => $this->form_validation->set_value('bukti_pembayaran'),
+        //     );
+        //     $this->data['id_produk'] = array(
+        //         'id'    => 'id_produk',
+        //         'name'  => 'id_produk',
+        //         'value' => $this->form_validation->set_value('id_produk', $row['id_produk']),
+        //     );
+        //     $this->data['additional_head'] = '<link rel="stylesheet" href="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/css/bootstrap-select.css" />
+        //                                     <link rel="stylesheet" href="' . base_url() . 'assets/landing-page/css/detail_produk.css" />';
+        //     $this->data['additional_body'] = '<script src="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/js/bootstrap-select.js"></script>';
+        //     $this->data['content'] = 'interface/produk/beli/index';
+        //     $this->template->_render_page('layout/landingpagePanel', $this->data);
+            $this->template->_render_page('layout/landingpagePanel');
+        // } else {
+        //     $this->session->set_flashdata('warning', 'Pastikan Anda Memilih Barang Terlebih Dahulu');
+        //     redirect($_SERVER['HTTP_REFERER']);
+        // }
+}
 
 // Other Stuff
 	public function kontak()
@@ -207,4 +262,13 @@ class Belanja extends CI_Controller
 		return $string;
 	}
 
+// Beli Keranjang
+    public function keranjang_delete($id)
+    {
+        $where = array('id_keranjang' => $id);
+        $_id = $this->Main_model->where_data($where, 'keranjang')->row();
+        $this->Main_model->delete_data($where, 'keranjang');
+		$this->session->set_flashdata('success', 'Data berhasil dihapus!');
+        redirect('profile/keranjang', 'refresh');
+    }
 }

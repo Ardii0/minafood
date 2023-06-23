@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.5.1 (64 bit)
-MySQL - 10.4.27-MariaDB : Database - minafood
+MySQL - 8.0.29 : Database - minafood
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 10.4.27-MariaDB : Database - minafood
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`minafood` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`minafood` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `minafood`;
 
@@ -21,31 +21,30 @@ USE `minafood`;
 DROP TABLE IF EXISTS `alamat`;
 
 CREATE TABLE `alamat` (
-  `id_alamat` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) DEFAULT NULL,
-  `nama_penerima` varchar(50) DEFAULT NULL,
-  `nomor_hp` varchar(20) DEFAULT NULL,
-  `kota` varchar(50) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
-  `kode_pos` int(11) DEFAULT NULL,
-  `prioritas` enum('Utama','Samping') DEFAULT NULL,
+  `id_alamat` int NOT NULL AUTO_INCREMENT,
+  `id_user` int DEFAULT NULL,
+  `nama_penerima` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nomor_hp` int DEFAULT NULL,
+  `kota` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `kode_pos` int DEFAULT NULL,
+  `prioritas` enum('Utama','Samping') COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_alamat`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `alamat` */
 
 insert  into `alamat`(`id_alamat`,`id_user`,`nama_penerima`,`nomor_hp`,`kota`,`alamat`,`kode_pos`,`prioritas`) values 
-(1,3,'Ahmad Subardjo','089495959','Semarang','Jl. Hasanudin 05 RT/RW 09/09',1312,NULL),
-(2,2,'Ahmadun','082392332','Semarang','Jl. Pemuda Panjangan Raya RT09/R02',17738,NULL);
+(1,2,'ada',894759543,'ada','AlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamatAlamat',1312,NULL);
 
 /*Table structure for table `beli_langsung` */
 
 DROP TABLE IF EXISTS `beli_langsung`;
 
 CREATE TABLE `beli_langsung` (
-  `id_user` int(11) DEFAULT NULL,
-  `id_produk` int(11) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL
+  `id_user` int DEFAULT NULL,
+  `id_produk` int DEFAULT NULL,
+  `jumlah` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `beli_langsung` */
@@ -59,9 +58,9 @@ insert  into `beli_langsung`(`id_user`,`id_produk`,`jumlah`) values
 DROP TABLE IF EXISTS `kategori`;
 
 CREATE TABLE `kategori` (
-  `id_kategori` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_kategori` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id_kategori` int NOT NULL AUTO_INCREMENT,
+  `nama_kategori` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_kategori`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -80,29 +79,29 @@ CREATE TABLE `keranjang` (
   `id_produk` int DEFAULT NULL,
   `jumlah` int DEFAULT NULL,
   PRIMARY KEY (`id_keranjang`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `keranjang` */
 
 insert  into `keranjang`(`id_keranjang`,`id_user`,`id_produk`,`jumlah`) values 
-(1,2,1,1);
+(5,2,1,1);
 
 /*Table structure for table `kontak` */
 
 DROP TABLE IF EXISTS `kontak`;
 
 CREATE TABLE `kontak` (
-  `id_kontak` int(11) NOT NULL DEFAULT 1,
-  `alamat` varchar(200) NOT NULL,
-  `no_telp` varchar(50) NOT NULL,
-  `no_fax` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `maps_iframe` text NOT NULL,
-  `livechat_api` text NOT NULL,
-  `whatsapp_number` varchar(30) NOT NULL,
-  `facebook_url` varchar(200) NOT NULL,
-  `instagram_url` varchar(200) NOT NULL,
-  `twitter_url` varchar(200) NOT NULL,
+  `id_kontak` int NOT NULL DEFAULT '1',
+  `alamat` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `no_telp` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `no_fax` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `maps_iframe` text COLLATE utf8mb4_general_ci NOT NULL,
+  `livechat_api` text COLLATE utf8mb4_general_ci NOT NULL,
+  `whatsapp_number` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `facebook_url` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `instagram_url` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `twitter_url` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_kontak`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -116,17 +115,17 @@ insert  into `kontak`(`id_kontak`,`alamat`,`no_telp`,`no_fax`,`email`,`maps_ifra
 DROP TABLE IF EXISTS `pembayaran`;
 
 CREATE TABLE `pembayaran` (
-  `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT,
-  `kode_pembayaran` varchar(50) DEFAULT NULL,
-  `id_produk` int(11) NOT NULL,
-  `id_user` int(11) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `subtotal` int(11) DEFAULT NULL,
-  `id_alamat` int(11) DEFAULT NULL,
-  `status` enum('Telah Dikonfirmasi','Belum Dikonfirmasi') DEFAULT 'Belum Dikonfirmasi',
-  `bukti_pembayaran` text DEFAULT NULL,
+  `id_pembayaran` int NOT NULL AUTO_INCREMENT,
+  `kode_pembayaran` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_produk` int NOT NULL,
+  `id_user` int DEFAULT NULL,
+  `jumlah` int DEFAULT NULL,
+  `subtotal` int DEFAULT NULL,
+  `id_alamat` int DEFAULT NULL,
+  `status` enum('Telah Dikonfirmasi','Belum Dikonfirmasi') COLLATE utf8mb4_general_ci DEFAULT 'Belum Dikonfirmasi',
+  `bukti_pembayaran` text COLLATE utf8mb4_general_ci,
   `date` date DEFAULT NULL,
-  `detail_waktu` timestamp NOT NULL DEFAULT current_timestamp(),
+  `detail_waktu` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `waktu_konfirmasi` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_pembayaran`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -152,29 +151,29 @@ insert  into `pembayaran`(`id_pembayaran`,`kode_pembayaran`,`id_produk`,`id_user
 (17,'2305024M9292IR',2,2,NULL,0,NULL,'Telah Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:14:44','2023-05-03 06:04:10'),
 (18,'230502HWAQ9YJC',3,2,NULL,0,NULL,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:15:14',NULL),
 (19,'230502KO5O1C31',4,2,NULL,0,NULL,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:16:27',NULL),
-(20,'23050204VENWDY',1,2,1,250000,1,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:16:54',NULL),
+(20,'23050204VENWDY',1,2,1,250000,1,'Telah Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:16:54','2023-05-05 08:42:15'),
 (21,'230502LK37RGCQ',1,2,1,250000,1,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:19:09',NULL),
 (22,'230502ROQYCP8B',1,2,2,500000,1,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:20:39',NULL),
 (23,'230502ZBNR1GYW',1,2,1,250000,1,'Belum Dikonfirmasi',NULL,'2023-05-02','2023-05-03 02:23:39',NULL),
 (24,'230503W1UWEJBF',1,3,2,500000,1,'Belum Dikonfirmasi','qrcode_meet_google_com.png','2023-05-03','2023-05-03 13:53:56',NULL),
 (25,'2305039AFPKO01',1,2,2,500000,1,'Telah Dikonfirmasi','qrcode_meet_google_com1.png','2023-05-03','2023-05-03 13:55:57','2023-05-04 11:46:37'),
-(26,'230506K1FS1UOO',1,2,1,250000,1,'Belum Dikonfirmasi','piranha.jpg','2023-05-06','2023-05-06 16:30:17',NULL);
+(26,'230505TPU501XP',1,2,1,250000,1,'Belum Dikonfirmasi','qrcode_meet_google_com2.png','2023-05-05','2023-05-05 13:44:47',NULL);
 
 /*Table structure for table `produk` */
 
 DROP TABLE IF EXISTS `produk`;
 
 CREATE TABLE `produk` (
-  `id_produk` int(11) NOT NULL AUTO_INCREMENT,
-  `kode_produk` varchar(30) DEFAULT NULL,
-  `nama_produk` varchar(30) DEFAULT NULL,
-  `id_kategori` int(11) DEFAULT NULL,
-  `id_tipe` int(11) DEFAULT NULL,
-  `harga` int(11) DEFAULT NULL,
-  `stok` int(11) DEFAULT NULL,
-  `deskripsi` text DEFAULT NULL,
-  `foto` text DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `id_produk` int NOT NULL AUTO_INCREMENT,
+  `kode_produk` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nama_produk` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_kategori` int DEFAULT NULL,
+  `id_tipe` int DEFAULT NULL,
+  `harga` int DEFAULT NULL,
+  `stok` int DEFAULT NULL,
+  `deskripsi` text COLLATE utf8mb4_general_ci,
+  `foto` text COLLATE utf8mb4_general_ci,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_produk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -182,23 +181,18 @@ CREATE TABLE `produk` (
 
 insert  into `produk`(`id_produk`,`kode_produk`,`nama_produk`,`id_kategori`,`id_tipe`,`harga`,`stok`,`deskripsi`,`foto`,`created_at`) values 
 (1,'PDK-LWBISRV','Piranha',1,2,250000,1,'Contoh Deskripsi','piranha.jpg','2023-05-01 01:21:40'),
-(2,'PDK-ADADADA','Piranha ke 2',1,2,250000,NULL,'<p><em><strong>Contoh</strong></em><strong><em> Desk</em>ripsi<s> ada egege</s></strong></p>\r\n','','2023-05-01 01:21:40'),
+(2,'PDK-ADADADA','Piranha ke 2',1,2,250000,2,'<p><em><strong>Contoh</strong></em><strong><em> Desk</em>ripsi<s> ada egege</s></strong></p>\r\n','','2023-05-01 01:21:40'),
 (3,'PDK-022EGWJ','Ikan Lele',1,2,20000,NULL,'ada','','2023-05-01 16:05:37'),
-(4,'PDK-4HUC2UE','tes',1,1,20000,NULL,'<p>tes</p>\r\n',NULL,'2023-05-02 13:38:26'),
-(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2023-05-02 15:10:07'),
-(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2023-05-02 15:14:01'),
-(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2023-05-02 15:14:05'),
-(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2023-05-02 15:15:31'),
-(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2023-05-02 15:16:25');
+(4,'PDK-4HUC2UE','tes',1,1,20000,NULL,'<p>tes</p>\r\n',NULL,'2023-05-02 13:38:26');
 
 /*Table structure for table `tipe` */
 
 DROP TABLE IF EXISTS `tipe`;
 
 CREATE TABLE `tipe` (
-  `id_tipe` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_tipe` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id_tipe` int NOT NULL AUTO_INCREMENT,
+  `nama_tipe` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_tipe`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -213,12 +207,12 @@ insert  into `tipe`(`id_tipe`,`nama_tipe`,`created_at`) values
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` varchar(11) NOT NULL,
-  `foto` text DEFAULT NULL,
+  `id_user` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `foto` text COLLATE utf8mb4_general_ci,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -226,7 +220,7 @@ CREATE TABLE `users` (
 
 insert  into `users`(`id_user`,`username`,`email`,`password`,`role`,`foto`) values 
 (1,'Admin','admin@gmail.com','$2y$12$iyU4JEh/Dp2K/KC8pRN.UeCc1zuTsY7CdFxCxaHHmFTC6dtppb5Ni','Admin',NULL),
-(2,'ada','ada@ada.com','$2y$12$xlS4vuGOJCcysYmZ/FKEf.1MnKW0jqACCpoTwWBREXq8s1mHgiaFC','User','tokped.jpg');
+(2,'ada','ada@ada.com','$2y$12$xlS4vuGOJCcysYmZ/FKEf.1MnKW0jqACCpoTwWBREXq8s1mHgiaFC','User','qrcode_meet_google_com.png');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
