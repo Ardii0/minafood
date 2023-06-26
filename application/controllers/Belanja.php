@@ -189,61 +189,91 @@ class Belanja extends CI_Controller
         }
     }
 
-// Bayar
+// Beli
     public function beli()
     {
-        // $where = array('id_user' => $this->session->userdata('id_user'));
-        // $row = $this->Main_model->where_data($where, 'keranjang')->row_array();
-        // $bayarow = $this->Main_model->where_data($where, 'beli_langsung')->row_array();
-        // $this->data['beli'] = $bayarow;
-        // $this->data['alamat'] = $this->Main_model->where_data(array('id_user' => $this->session->userdata('id_user')), 'alamat')->row_array();
-        // if (isset($row['id_produk']) || isset($row['id_user'])) {
-        //     $this->data['nama_produk'] = array(
-        //         'id'    => 'nama_produk',
-        //         'name'  => 'nama_produk',
-        //         'type'  => 'text',
-        //         'value' => $this->form_validation->set_value('nama_produk', $row['nama_produk']),
-        //     );
-        //     $this->data['foto'] = array(
-        //         'id'    => 'foto',
-        //         'name'  => 'foto',
-        //         'type'  => 'file',
-        //         'value' => $this->form_validation->set_value('foto', $row['foto']),
-        //     );
-        //     $this->data['jumlah'] = array(
-        //         'id'    => 'jumlah',
-        //         'name'  => 'jumlah',
-        //         'type'  => 'number',
-        //         'value' => $this->form_validation->set_value('jumlah', $bayarow['jumlah']),
-        //     );
-        //     $this->data['subtotal'] = array(
-        //         'id'    => 'subtotal',
-        //         'name'  => 'subtotal',
-        //         'type'  => 'text',
-        //         'value' => $this->form_validation->set_value('subtotal'),
-        //     );
-        //     $this->data['bukti_pembayaran'] = array(
-        //         'id'    => 'bukti_pembayaran',
-        //         'name'  => 'bukti_pembayaran',
-        //         'type'  => 'file',
-        //         'value' => $this->form_validation->set_value('bukti_pembayaran'),
-        //     );
-        //     $this->data['id_produk'] = array(
-        //         'id'    => 'id_produk',
-        //         'name'  => 'id_produk',
-        //         'value' => $this->form_validation->set_value('id_produk', $row['id_produk']),
-        //     );
-        //     $this->data['additional_head'] = '<link rel="stylesheet" href="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/css/bootstrap-select.css" />
-        //                                     <link rel="stylesheet" href="' . base_url() . 'assets/landing-page/css/detail_produk.css" />';
-        //     $this->data['additional_body'] = '<script src="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/js/bootstrap-select.js"></script>';
-        //     $this->data['content'] = 'interface/produk/beli/index';
-        //     $this->template->_render_page('layout/landingpagePanel', $this->data);
-            $this->template->_render_page('layout/landingpagePanel');
-        // } else {
-        //     $this->session->set_flashdata('warning', 'Pastikan Anda Memilih Barang Terlebih Dahulu');
-        //     redirect($_SERVER['HTTP_REFERER']);
-        // }
-}
+        $where = array('id_user' => $this->session->userdata('id_user'));
+        $row = $this->Main_model->where_data($where, 'keranjang')->result();
+        $data = $this->db
+                ->query("Select SUM(keranjang.jumlah) as total from keranjang")
+                ->row();
+        $this->data['total'] = $data;
+        $this->data['beli'] = $row;
+        $this->data['alamat'] = $this->Main_model->where_data(array('id_user' => $this->session->userdata('id_user')), 'alamat')->row_array();
+        if ($this->session->userdata('id_user')) {
+            if ($this->form_validation->run() == FALSE) {
+                // foreach ($row as $key => $value) {
+                //     $this->data['total'] = IDR($value->jumlah*Produk($value->id_produk, 'harga'));
+                // }
+                $this->data['bukti_pembayaran'] = array(
+                    'id'    => 'bukti_pembayaran',
+                    'name'  => 'bukti_pembayaran',
+                    'type'  => 'file',
+                    'value' => $this->form_validation->set_value('bukti_pembayaran'),
+                );
+                $this->data['additional_head'] = '<link rel="stylesheet" href="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/css/bootstrap-select.css" />
+                                                <link rel="stylesheet" href="' . base_url() . 'assets/landing-page/css/detail_produk.css" />';
+                $this->data['additional_body'] = '<script src="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/js/bootstrap-select.js"></script>';
+                $this->data['content'] = 'interface/produk/beli/index';
+                $this->template->_render_page('layout/landingpagePanel', $this->data);
+            } else {
+                $id_produk = $this->input->post('id_produk', true);
+                $id_alamat = $this->input->post('id_alamat', true);
+                $jumlah    = $this->input->post('jumlah', true);
+                $subtotal  = $this->Main_model->subtotal($id_produk)*$jumlah;
+                $data = [
+                    'kode_pembayaran'   => date('ymd').$this->randomize(8),
+                    'id_produk'     	=> $id_produk,
+                    'id_user'     	    => $this->session->userdata('id_user'),
+                    'jumlah'     	    => $jumlah,
+                    'subtotal'     	    => $subtotal,
+                    'id_alamat'     	=> $id_alamat,
+                    'date'       	    => date('y-m-d'),
+                ];
+                $stok = [
+                    'stok'   => $this->input->post('sisa', true),
+                ];
+                if (!empty($_FILES['bukti_pembayaran']['name'])) {
+                    $config['upload_path']          = './uploads/bukti_pembayaran/';
+                    $config['allowed_types']        = 'jpg|png';
+                    $config['max_size']             = 2000000;
+                    $config['max_width']            = 3600;
+                    $config['max_height']           = 3600;
+                    $config['file_name']            = $_FILES['bukti_pembayaran']['name'];
+
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+
+                    if (!$this->upload->do_upload('bukti_pembayaran')) {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+                        redirect('belanja/bayar', 'refresh');
+                    } else {
+                        $image_data = $this->upload->data();
+                        $data['bukti_pembayaran'] = $image_data['file_name'];
+                        foreach($data as $data) {
+                            foreach($stok as $stok) {
+                            $this->Main_model->insert_data($data, 'pembayaran');
+                            $this->Main_model->update_data(array('id_produk' => $data->id_produk), $stok, 'produk');
+                            $this->Main_model->delete_data(array('id_user' => $this->session->userdata('id_user')), 'keranjang');
+                            $this->session->set_flashdata('success', 'Barang telah dibeli!');
+                            redirect('', 'refresh');
+                            }
+                        }
+                    }
+                } else {
+                    if ($this->Main_model->insert_data($data, 'pembayaran')) {
+                        $this->Main_model->update_data(array('id_produk' => $id_produk), $stok, 'produk');
+                        $this->Main_model->delete_data(array('id_user' => $this->session->userdata('id_user')), 'keranjang');
+                        $this->session->set_flashdata('success', 'Barang telah dibeli!');
+                        redirect('', 'refresh');
+                    }
+                }
+            }
+        } else {
+            $this->session->set_flashdata('warning', 'Terjadi kesalahan, Coba lagi nanti..');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
 
 // Other Stuff
 	public function kontak()
