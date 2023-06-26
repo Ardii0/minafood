@@ -63,7 +63,7 @@
                                 <div>Unggah Bukti Pembayaran (jpg/png)*</div>
                                 <div>
                                     <div class="custom-file">
-                                    <?php echo form_upload($bukti_pembayaran, '', 'accept="image/*" class="custom-file-input" id="uploadbukti"" lang="in" '); ?>
+                                    <?php echo form_upload($bukti_pembayaran, '', 'accept="image/*" class="custom-file-input" id="uploadbukti" lang="in" required'); ?>
                                     <label class="custom-file-label" for="uploadbukti">Pilih File untuk Unggah Bukti Pembayaran</label>
                                     </div>
                                 </div>
@@ -73,14 +73,14 @@
                             <!-- <div>
                                 <h5 class="mt-4">Total Harga: 
                                     A<?php echo $total->total ?><br>
-                                    <?php foreach($beli as $tot): ?>
-                                        <?php echo Produk($tot->id_produk, 'harga')*$tot->jumlah ?>
+                                    <?php foreach($beli as $bl): ?>
+                                        <?php echo Produk($bl->id_produk, 'harga')*$bl->jumlah ?>
                                     <?php endforeach; ?>
                                     <input type="text" name="subtotal" class="number-to-text" value="<?php echo IDR(Produk($data->id_produk, 'harga')*$data->jumlah); ?>" id="subtotal" style="border: none; outline: none; background: white" disabled>
                                 </h5>
                             </div> -->
                         </div>
-                        <button type="submit" class="btn btn-info mb-3" <?php if(!$this->session->userdata('role') == 'User' || empty($produk['stok'])){
+                        <button type="submit" class="btn btn-info mb-3" <?php if(!$this->session->userdata('role') == 'User' || empty($data->id_produk)){
                             echo 'disabled style="cursor: not-allowed;"';
                         } ?>>Beli Sekarang</button>
                     </div>

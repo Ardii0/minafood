@@ -189,7 +189,7 @@ class Belanja extends CI_Controller
         }
     }
 
-// Beli
+// Beli Keranjang
     public function beli()
     {
         $where = array('id_user' => $this->session->userdata('id_user'));
@@ -208,7 +208,6 @@ class Belanja extends CI_Controller
                 $this->data['bukti_pembayaran'] = array(
                     'id'    => 'bukti_pembayaran',
                     'name'  => 'bukti_pembayaran',
-                    'type'  => 'file',
                     'value' => $this->form_validation->set_value('bukti_pembayaran'),
                 );
                 $this->data['additional_head'] = '<link rel="stylesheet" href="' . base_url() . 'assets/admin-page/plugins/bootstrap-select/css/bootstrap-select.css" />
@@ -217,22 +216,27 @@ class Belanja extends CI_Controller
                 $this->data['content'] = 'interface/produk/beli/index';
                 $this->template->_render_page('layout/landingpagePanel', $this->data);
             } else {
-                $id_produk = $this->input->post('id_produk', true);
+                // $id_produk = $this->input->post('id_produk', true);
                 $id_alamat = $this->input->post('id_alamat', true);
-                $jumlah    = $this->input->post('jumlah', true);
-                $subtotal  = $this->Main_model->subtotal($id_produk)*$jumlah;
-                $data = [
-                    'kode_pembayaran'   => date('ymd').$this->randomize(8),
-                    'id_produk'     	=> $id_produk,
-                    'id_user'     	    => $this->session->userdata('id_user'),
-                    'jumlah'     	    => $jumlah,
-                    'subtotal'     	    => $subtotal,
-                    'id_alamat'     	=> $id_alamat,
-                    'date'       	    => date('y-m-d'),
-                ];
-                $stok = [
-                    'stok'   => $this->input->post('sisa', true),
-                ];
+                // $jumlah    = $this->input->post('jumlah', true);
+                // $subtotal  = $this->Main_model->subtotal($id_produk)*$jumlah;
+                // $data = [
+                //     'kode_pembayaran'   => date('ymd').$this->randomize(8),
+                //     'id_produk'     	=> $id_produk,
+                //     'id_user'     	    => $this->session->userdata('id_user'),
+                //     'jumlah'     	    => $jumlah,
+                //     'subtotal'     	    => $subtotal,
+                //     'id_alamat'     	=> $id_alamat,
+                //     'date'       	    => date('y-m-d'),
+                // ];
+                $data = $this->Main_model->where_data($where, 'keranjang')->result();
+                $sisaan = $this->Main_model->where_data($where, 'produk')->result();
+                // foreach($stokan as $stok) {
+                //     $stok = $stok->jumlah-$sisa;
+                // };
+                // $stok = [
+                //     'stok'   => $this->Main_model->where_data($where, 'keranjang')->result(),
+                // ];
                 if (!empty($_FILES['bukti_pembayaran']['name'])) {
                     $config['upload_path']          = './uploads/bukti_pembayaran/';
                     $config['allowed_types']        = 'jpg|png';
@@ -246,14 +250,24 @@ class Belanja extends CI_Controller
 
                     if (!$this->upload->do_upload('bukti_pembayaran')) {
                         $this->session->set_flashdata('error', $this->upload->display_errors());
-                        redirect('belanja/bayar', 'refresh');
+                        redirect('belanja/beli', 'refresh');
                     } else {
                         $image_data = $this->upload->data();
-                        $data['bukti_pembayaran'] = $image_data['file_name'];
+                        $bukti_pembayaran = $image_data['file_name'];
                         foreach($data as $data) {
-                            foreach($stok as $stok) {
-                            $this->Main_model->insert_data($data, 'pembayaran');
-                            $this->Main_model->update_data(array('id_produk' => $data->id_produk), $stok, 'produk');
+                            foreach($sisaan as $data_stok) {
+                            $res = [
+                                'kode_pembayaran'   => date('ymd').$this->randomize(8),
+                                'id_produk'     	=> $data->id_produk,
+                                'bukti_pembayaran'  => $bukti_pembayaran,
+                                'id_user'     	    => $this->session->userdata('id_user'),
+                                'jumlah'     	    => $data->jumlah,
+                                'subtotal'     	    => $data->jumlah,
+                                'id_alamat'     	=> $id_alamat,
+                                'date'       	    => date('y-m-d'),
+                            ];
+                            $this->Main_model->insert_data($res, 'pembayaran');
+                            $this->Main_model->update_data(array('id_produk' => $data->id_produk), $data_stok->jumlah, 'produk');
                             $this->Main_model->delete_data(array('id_user' => $this->session->userdata('id_user')), 'keranjang');
                             $this->session->set_flashdata('success', 'Barang telah dibeli!');
                             redirect('', 'refresh');
@@ -261,18 +275,23 @@ class Belanja extends CI_Controller
                         }
                     }
                 } else {
-                    if ($this->Main_model->insert_data($data, 'pembayaran')) {
-                        $this->Main_model->update_data(array('id_produk' => $id_produk), $stok, 'produk');
-                        $this->Main_model->delete_data(array('id_user' => $this->session->userdata('id_user')), 'keranjang');
-                        $this->session->set_flashdata('success', 'Barang telah dibeli!');
-                        redirect('', 'refresh');
-                    }
+                    $this->session->set_flashdata('warning', 'Terjadi kesalahan, Coba lagi nanti..');
+                    redirect('', 'refresh');
                 }
             }
         } else {
             $this->session->set_flashdata('warning', 'Terjadi kesalahan, Coba lagi nanti..');
             redirect($_SERVER['HTTP_REFERER']);
         }
+    }
+
+    public function keranjang_delete($id)
+    {
+        $where = array('id_keranjang' => $id);
+        $_id = $this->Main_model->where_data($where, 'keranjang')->row();
+        $this->Main_model->delete_data($where, 'keranjang');
+		$this->session->set_flashdata('success', 'Data berhasil dihapus!');
+        redirect('profile/keranjang', 'refresh');
     }
 
 // Other Stuff
@@ -291,14 +310,4 @@ class Belanja extends CI_Controller
 		}
 		return $string;
 	}
-
-// Beli Keranjang
-    public function keranjang_delete($id)
-    {
-        $where = array('id_keranjang' => $id);
-        $_id = $this->Main_model->where_data($where, 'keranjang')->row();
-        $this->Main_model->delete_data($where, 'keranjang');
-		$this->session->set_flashdata('success', 'Data berhasil dihapus!');
-        redirect('profile/keranjang', 'refresh');
-    }
 }
